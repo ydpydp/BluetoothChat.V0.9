@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@android:color/holo_green_dark">
+  <LinearLayout    
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dip"
+    android:layout_marginTop="30dp">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="20dip"
+      android:text="Brews: " />
+
+    <TextView
+        android:id="@+id/brew_count_label"
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="None"
+        android:textSize="20dip" />
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="0.85"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:padding="10dip" >
+
+      <Button
+          android:id="@+id/brew_time_down"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="#00000000"
+          android:text="-"
+          android:textSize="40dip" />
+
+    <TextView
+      android:id="@+id/brew_time"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="0:00"
+      android:textSize="40dip"
+      android:padding="10dip" />
+
+    <Button
+        android:id="@+id/brew_time_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:text="+"
+        android:textSize="40dip" />
+
+  </LinearLayout>
+
+  <Button
+      android:id="@+id/brew_start"
+      android:layout_width="150dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="0.07"
+      android:background="#cccccc"
+      android:text="Start"
+      android:layout_gravity="center_horizontal" 
+      android:layout_marginBottom="100dp"/>
+
+</LinearLayout>
