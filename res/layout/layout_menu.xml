@@ -62,7 +62,7 @@
                 android:clickable="true"  />
         </RelativeLayout>
 
-        <RelativeLayout
+    <!--     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -86,33 +86,9 @@
                 android:textColor="#f0f0f0"
                 android:textSize="20sp" 
                 android:clickable="true"/>
-        </RelativeLayout>
+        </RelativeLayout> -->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/four"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/icon" />
-
-            <TextView
-                android:id="@+id/menu_tv_04"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/four"
-                android:text="结束"
-                android:textColor="#f0f0f0"
-                android:textSize="20sp"
-                android:clickable="true" />
-        </RelativeLayout>
+     
 
      <RelativeLayout
             android:layout_width="match_parent"
@@ -134,10 +110,37 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@id/five"
-                android:text="对话框"
+                android:text="APP信息"
                 android:textColor="#f0f0f0"
                 android:textSize="20sp" 
                 android:clickable="true"/>
+        </RelativeLayout>
+        
+     
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/four"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/icon" />
+
+            <TextView
+                android:id="@+id/menu_tv_04"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/four"
+                android:text="退出"
+                android:textColor="#f0f0f0"
+                android:textSize="20sp"
+                android:clickable="true" />
         </RelativeLayout>
     </LinearLayout>
 

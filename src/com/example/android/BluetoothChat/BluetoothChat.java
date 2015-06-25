@@ -17,7 +17,6 @@
 package com.example.android.BluetoothChat;
 
 import java.util.Timer;
-import java.util.zip.Inflater;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -25,8 +24,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -59,6 +61,7 @@ public class BluetoothChat extends Activity implements OnClickListener {
 	public static final int MESSAGE_WRITE = 3;
 	public static final int MESSAGE_DEVICE_NAME = 4;
 	public static final int MESSAGE_TOAST = 5;
+	public static final int MESSAGE_TIME=0;
 
 	// Key names received from the BluetoothChatService Handler
 	public static final String DEVICE_NAME = "device_name";
@@ -71,11 +74,11 @@ public class BluetoothChat extends Activity implements OnClickListener {
 	public static boolean isHex = false;
 
 	// Layout Views
-	private TextView mTitle, tv_01, tv_02;
+	private TextView mTitle, tv_01, tv_02, tv_03;
+	/* btn_01, btn_02,menu_tv_03, */
+	private Button btn_03, btn_04;
 
-	private Button btn_01, btn_02, btn_03, btn_04;
-	
-	private TextView menu_tv_01, menu_tv_02, menu_tv_03, menu_tv_04,menu_tv_05;
+	private TextView menu_tv_01, menu_tv_02, menu_tv_04, menu_tv_05;
 	// private ListView mConversationView;
 	/*
 	 * private EditText mOutEditText; private Button mSendButton; private
@@ -97,7 +100,11 @@ public class BluetoothChat extends Activity implements OnClickListener {
 	private String temperature = null;
 	private Timer timer;
 	private SlidingMenu mMenu;
-
+	boolean flag = true;
+	
+	/*boolean  Flag=true;*/
+	Intent mIntent = new Intent();
+	long time = 0;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -131,28 +138,33 @@ public class BluetoothChat extends Activity implements OnClickListener {
 
 	public void init() {
 
-		btn_01 = (Button) findViewById(R.id.btn_01);
-		btn_02 = (Button) findViewById(R.id.btn_02);
+		/*
+		 * btn_01 = (Button) findViewById(R.id.btn_01); btn_02 = (Button)
+		 * findViewById(R.id.btn_02);
+		 */
 		btn_03 = (Button) findViewById(R.id.btn_03);
 		btn_04 = (Button) findViewById(R.id.btn_04);
 
-		btn_01.setOnClickListener(this);
-		btn_02.setOnClickListener(this);
+		/*
+		 * btn_01.setOnClickListener(this); btn_02.setOnClickListener(this);
+		 */
 		btn_03.setOnClickListener(this);
 		btn_04.setOnClickListener(this);
-		
+
 		mMenu = (SlidingMenu) findViewById(R.id.id_menu);
 
 		menu_tv_01 = (TextView) findViewById(R.id.menu_tv_01);
 		menu_tv_02 = (TextView) findViewById(R.id.menu_tv_02);
-		menu_tv_03 = (TextView) findViewById(R.id.menu_tv_03);
+		// menu_tv_03 = (TextView) findViewById(R.id.menu_tv_03);
 		menu_tv_04 = (TextView) findViewById(R.id.menu_tv_04);
 		menu_tv_05 = (TextView) findViewById(R.id.menu_tv_05);
 		menu_tv_01.setOnClickListener(this);
 		menu_tv_02.setOnClickListener(this);
-		menu_tv_03.setOnClickListener(this);
+		// menu_tv_03.setOnClickListener(this);
 		menu_tv_04.setOnClickListener(this);
 		menu_tv_05.setOnClickListener(this);
+
+		tv_03 = (TextView) findViewById(R.id.tv_03);
 
 	}
 
@@ -369,6 +381,16 @@ public class BluetoothChat extends Activity implements OnClickListener {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
+			case  MESSAGE_TIME:
+				 int s=(int) time;      
+				 int N = s/3600;       
+				 s = s%3600;       
+				 int K = s/60;       
+				 s = s%60;       
+				 int M = s;       
+				 System.out.println("时间是："+N+"小时 "+K+"分钟 "+M+"秒"); 
+				tv_03.setText(String.valueOf(N+":"+K+":"+M));
+
 			case MESSAGE_STATE_CHANGE:
 				if (D)
 					Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
@@ -440,7 +462,7 @@ public class BluetoothChat extends Activity implements OnClickListener {
 					tv_01 = (TextView) findViewById(R.id.tv_01);
 					tv_02 = (TextView) findViewById(R.id.tv_02);
 
-					if (readMessage1.length() > 15) {
+					if (readMessage1.length() > 15 ) {
 						int W1 = readMessage1.indexOf("W");
 						// int T1= readMessage1.indexOf("T");
 						weight = readMessage1.substring(W1 + 1, W1 + 5);
@@ -470,7 +492,7 @@ public class BluetoothChat extends Activity implements OnClickListener {
 						 * tv_02.setText("temperature" + temperature);
 						 * readMessage1 = ""; }
 						 */
-
+                          
 					}
 
 				}
@@ -578,38 +600,127 @@ public class BluetoothChat extends Activity implements OnClickListener {
 		return false;
 	}
 
-	private String[] adapterData;
-
 	@Override
 	public void onClick(View v) {
+
 		switch (v.getId()) {
-		case R.id.btn_01:
-			Toast.makeText(BluetoothChat.this, "button1被点击了！", 20).show();
-			/*
-			 * //自定义对话框；
-			 * 
-			 * 
-			 * Dialog dialog = new Dialog(this);
-			 * dialog.setContentView(R.layout.dialog_layout);
-			 * 
-			 * dialog.setTitle("情景模式设定"); dialog.setOnShowListener(new
-			 * OnClickListener() {
-			 * 
-			 * @Override public void onClick(View v) { // TODO Auto-generated
-			 * method stub
-			 * 
-			 * } });
-			 * 
-			 * 
-			 * 
-			 * dialog.getLayoutInflater()。 Window dialogWindow =
-			 * dialog.getWindow(); WindowManager.LayoutParams lp =
-			 * dialogWindow.getAttributes();
-			 * dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP); lp.x = 100;
-			 * // 新位置X坐标 lp.y = 100; // 新位置Y坐标 lp.width = 300; // 宽度 lp.height =
-			 * 300; // 高度 lp.alpha = 0.7f; // 透明度
-			 * dialogWindow.setAttributes(lp); dialog.show();
-			 */
+		/*
+		 * case R.id.btn_01: Toast.makeText(BluetoothChat.this, "button1被点击了！",
+		 * 20).show(); /* //自定义对话框；
+		 * 
+		 * 
+		 * Dialog dialog = new Dialog(this);
+		 * dialog.setContentView(R.layout.dialog_layout);
+		 * 
+		 * dialog.setTitle("情景模式设定"); dialog.setOnShowListener(new
+		 * OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { // TODO Auto-generated method
+		 * stub
+		 * 
+		 * } });
+		 * 
+		 * 
+		 * 
+		 * dialog.getLayoutInflater()。 Window dialogWindow = dialog.getWindow();
+		 * WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+		 * dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP); lp.x = 100; //
+		 * 新位置X坐标 lp.y = 100; // 新位置Y坐标 lp.width = 300; // 宽度 lp.height = 300;
+		 * // 高度 lp.alpha = 0.7f; // 透明度 dialogWindow.setAttributes(lp);
+		 * dialog.show();
+		 * 
+		 * 
+		 * new AlertDialog.Builder(this)
+		 * 
+		 * .setTitle("模式设置")
+		 * 
+		 * .setIcon(R.drawable.icon) .setSingleChoiceItems( new String[] {
+		 * "1分钟", "5分钟", "10分钟", "15分钟" },
+		 * 
+		 * 0, new DialogInterface.OnClickListener() {
+		 * 
+		 * public void onClick(DialogInterface dialog,
+		 * 
+		 * int which) {
+		 * 
+		 * dialog.dismiss();
+		 * 
+		 * Toast.makeText(BluetoothChat.this,
+		 * 
+		 * "你选择了: " + which, 5).show();
+		 * 
+		 * }
+		 * 
+		 * }).setNegativeButton("取消", null).show();
+		 * 
+		 * break;
+		 */
+		/*
+		 * case R.id.btn_02: Toast.makeText(BluetoothChat.this, "button2被点击了！",
+		 * 20).show();
+		 * 
+		 * if (mConnectedDeviceName != null) { weight = "0"; temperature = "0";
+		 * Integer.parseInt(weight); Integer.parseInt(temperature);
+		 * mConversationArrayAdapter.add("temperature : " + temperature);
+		 * mConversationArrayAdapter.add(readMessage1);
+		 * mConversationArrayAdapter.add("weight : " + weight);
+		 * tv_01.setText("weight" + weight); tv_02.setText("temperature" +
+		 * temperature); readMessage1 = ""; Toast.makeText(BluetoothChat.this,
+		 * "weight" + weight + "temperature" + temperature, 20) .show(); } else
+		 * { Toast.makeText(BluetoothChat.this, "请连接设备！", 20).show(); }
+		 * 
+		 * break;
+		 */
+		case R.id.btn_03:
+			Toast.makeText(BluetoothChat.this, "开始计时！", 20).show();
+			IntentFilter filter = new IntentFilter();
+			filter.addAction("s.s.s.s");
+			BroadcastReceiver receiver = new MyTimeRceiver();
+			registerReceiver(receiver, filter);
+            if(flag==true){
+            	mIntent.setAction("x.x.x.x");
+    			mIntent.putExtra("flag", flag);
+    			startService(mIntent);
+    			flag = false;
+            }
+			
+			break;
+		case R.id.btn_04:
+			Toast.makeText(BluetoothChat.this, "计时结束！", 20).show();
+			if(flag!=true){
+				
+				mIntent.setAction("x.x.x.x");
+				mIntent.putExtra("flag", flag);
+				startService(mIntent);
+				flag = true;
+			}
+			break;
+
+		case R.id.menu_tv_01:
+
+			mMenu.toggle();
+            
+			if (mConnectedDeviceName != null) {
+				weight = "0";
+				temperature = "0";
+				Integer.parseInt(weight);
+				Integer.parseInt(temperature);
+				mConversationArrayAdapter.add("temperature : " + temperature);
+				mConversationArrayAdapter.add(readMessage1);
+				mConversationArrayAdapter.add("weight : " + weight);
+				tv_01.setText("weight" + weight);
+				tv_02.setText("temperature" + temperature);
+				readMessage1 = "";
+				Toast.makeText(BluetoothChat.this,
+						"weight" + weight + "temperature" + temperature, 20)
+						.show();
+			} else {
+				
+				Toast.makeText(BluetoothChat.this, "请连接设备！", 20).show();
+			}
+
+			break;
+		case R.id.menu_tv_02:
 
 			new AlertDialog.Builder(this)
 
@@ -634,134 +745,62 @@ public class BluetoothChat extends Activity implements OnClickListener {
 								}
 
 							}).setNegativeButton("取消", null).show();
-
 			break;
-		case R.id.btn_02:
-			/* Toast.makeText(BluetoothChat.this, "button2被点击了！", 20).show(); */
-
-			if (mConnectedDeviceName != null) {
-				weight = "0";
-				temperature = "0";
-				Integer.parseInt(weight);
-				Integer.parseInt(temperature);
-				mConversationArrayAdapter.add("temperature : " + temperature);
-				mConversationArrayAdapter.add(readMessage1);
-				mConversationArrayAdapter.add("weight : " + weight);
-				tv_01.setText("weight" + weight);
-				tv_02.setText("temperature" + temperature);
-				readMessage1 = "";
-				Toast.makeText(BluetoothChat.this,
-						"weight" + weight + "temperature" + temperature, 20)
-						.show();
-			} else {
-				Toast.makeText(BluetoothChat.this, "请连接设备！", 20).show();
-			}
-
-			break;
-		case R.id.btn_03:
-			Toast.makeText(BluetoothChat.this, "button3被点击了！", 20).show();
-			Intent intent = new Intent(BluetoothChat.this,
-					BrewClockActivity.class);
-			startActivity(intent);
-			break;
-		case R.id.btn_04:
-			Toast.makeText(BluetoothChat.this, "button4被点击了！", 20).show();
-			break;
-
-		case R.id.menu_tv_01:
-             
-            	 mMenu.toggle();
-             
-            	 if (mConnectedDeviceName != null) {
-     				weight = "0";
-     				temperature = "0";
-     				Integer.parseInt(weight);
-     				Integer.parseInt(temperature);
-     				mConversationArrayAdapter.add("temperature : " + temperature);
-     				mConversationArrayAdapter.add(readMessage1);
-     				mConversationArrayAdapter.add("weight : " + weight);
-     				tv_01.setText("weight" + weight);
-     				tv_02.setText("temperature" + temperature);
-     				readMessage1 = "";
-     				Toast.makeText(BluetoothChat.this,
-     						"weight" + weight + "temperature" + temperature, 20)
-     						.show();
-     			} else {
-     				Toast.makeText(BluetoothChat.this, "请连接设备！", 20).show();
-     			}
-            	 
-           
-			
-			break;
-		case R.id.menu_tv_02:
-    
-			new AlertDialog.Builder(this)
-
-			.setTitle("模式设置")
-
-			.setIcon(R.drawable.icon)
-			.setSingleChoiceItems(
-					new String[] { "1分钟", "5分钟", "10分钟", "15分钟" },
-
-					0, new DialogInterface.OnClickListener() {
-
-						public void onClick(DialogInterface dialog,
-
-						int which) {
-
-							dialog.dismiss();
-
-							Toast.makeText(BluetoothChat.this,
-
-							"你选择了: " + which, 5).show();
-
-						}
-
-					}).setNegativeButton("取消", null).show();
-			break;
-		case R.id.menu_tv_03:
-			Intent intent1 = new Intent(BluetoothChat.this,
-					BrewClockActivity.class);
-			startActivity(intent1);  
-			Toast.makeText(BluetoothChat.this, "菜单计时！", 20).show();
-			break;
+		/*
+		 * case R.id.menu_tv_03: Intent intent1 = new Intent(BluetoothChat.this,
+		 * BrewClockActivity.class); startActivity(intent1);
+		 * Toast.makeText(BluetoothChat.this, "菜单计时！", 20).show(); break;
+		 */
 		case R.id.menu_tv_04:
 			Toast.makeText(BluetoothChat.this, "菜单结束！", 20).show();
 			finish();
 			break;
-			
+
 		case R.id.menu_tv_05:
-			Toast.makeText(BluetoothChat.this, "对话框！", 20).show();
-			
-			//自定义对话框
+			Toast.makeText(BluetoothChat.this, "有关APP简介对话框！", 20).show();
+
+			// 自定义对话框
 			Dialog dialog = new Dialog(this);
-			 dialog.setContentView(R.layout.dialog_layout);
-			  
-			  dialog.setTitle("情景模式设定"); 
-			/*  dialog.setOnShowListener(new
-			  OnClickListener() {
-			 
-			 @Override public void onClick(View v) { // TODO Auto-generated
-			 method stub
-			 
-			 } });*/
-			 dialog.getLayoutInflater();
-			 Window dialogWindow =dialog.getWindow(); 
-			 WindowManager.LayoutParams lp =dialogWindow.getAttributes();
-			  dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP); 
-			  lp.x = 100;// 新位置X坐标 
-			  lp.y = 100; // 新位置Y坐标 
-			  lp.width = 300; // 宽度
-			  lp.height =300; // 高度 
-			  lp.alpha = 0.7f; // 透明度
-			  dialogWindow.setAttributes(lp); 
-			  dialog.show();
-			
-			
-			
+			dialog.setContentView(R.layout.dialog_layout);
+
+			dialog.setTitle("APP详情");
+			/*
+			 * dialog.setOnShowListener(new OnClickListener() {
+			 * 
+			 * @Override public void onClick(View v) { // TODO Auto-generated
+			 * method stub
+			 * 
+			 * } });
+			 */
+			dialog.getLayoutInflater();
+			Window dialogWindow = dialog.getWindow();
+			WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+			dialogWindow.setGravity(Gravity.LEFT | Gravity.TOP);
+			lp.x = 100;// 新位置X坐标
+			lp.y = 100; // 新位置Y坐标
+			lp.width = 300; // 宽度
+			lp.height = 300; // 高度
+			lp.alpha = 0.7f; // 透明度
+			dialogWindow.setAttributes(lp);
+			dialog.show();
+
 			break;
 		}
 
 	}
 
+	class MyTimeRceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if ("s.s.s.s".equals(intent.getAction())) {
+				time = intent.getLongExtra("data", 0);
+				
+				mHandler.sendEmptyMessage(0);
+
+			}
+
+		}
+
+	}
 }

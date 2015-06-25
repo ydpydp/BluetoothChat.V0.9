@@ -89,7 +89,7 @@
     -->
     <!-- </LinearLayout> -->
  
- <include layout="@layout/layout_menu" />
+ <include layout="@layout/layout_menu" /> 
  <RelativeLayout 
    
     android:layout_width="fill_parent"
@@ -125,7 +125,7 @@
     
     
 
-    <Button
+  <!--   <Button
         android:id="@+id/btn_01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -136,9 +136,9 @@
         android:drawableTop="@drawable/icon_5_b"
         android:src="@drawable/icon_5_b"
         android:text="模式"
-        android:textColor="@color/txt" />
+        android:textColor="@color/txt" /> -->
 
-    <Button
+<!--     <Button
         android:id="@+id/btn_04"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -148,11 +148,11 @@
         android:layout_toRightOf="@id/btn_01"
         android:background="@drawable/selector"
         android:drawableTop="@drawable/icon_5_b"
-        android:text="结束"
+        android:text="完成"
         android:textColor="@color/txt"
                 />
-
-    <Button
+ -->
+   <!--  <Button
         android:id="@+id/btn_02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -162,8 +162,8 @@
         android:drawableTop="@drawable/icon_5_b"
         android:text="清零"
         android:textColor="@color/txt" />
-
-    <Button
+ -->
+   <!--  <Button
         android:id="@+id/btn_03"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -172,8 +172,52 @@
         android:layout_toLeftOf="@+id/btn_01"
         android:background="@drawable/selector"
         android:drawableTop="@drawable/icon_5_b"
-        android:text="计时"
+        android:text="开始"
+        android:textColor="@color/txt" /> -->
+    
+      
+
+    <Button
+        android:id="@+id/btn_03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="88dp"
+        android:layout_marginLeft="100dp"
+        android:layout_toRightOf="@+id/button1"
+        android:background="@drawable/selector"
+        android:drawableTop="@drawable/icon_5_b"
+        android:text="开始"
         android:textColor="@color/txt" />
+
+      <Button
+          android:id="@+id/btn_04"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBaseline="@+id/btn_03"
+          android:layout_alignBottom="@+id/btn_03"
+          android:layout_marginLeft="30dp"
+          android:layout_toEndOf="@id/btn_03"
+          android:layout_toRightOf="@+id/tv_02"
+          android:background="@drawable/selector"
+          android:drawableTop="@drawable/icon_5_b"
+          android:text="完成"
+          android:textColor="@color/txt" />
+
+      <TextView
+          android:id="@+id/tv_03"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignRight="@+id/btn_04"
+          android:layout_below="@+id/tv_02"
+          android:layout_marginTop="30dp"
+          android:text=""
+          android:textSize="30dp"
+          android:textColor="#ffffff" />
+    
+    
+    
+    
    
 
 </RelativeLayout>
